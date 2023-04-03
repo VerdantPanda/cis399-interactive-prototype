@@ -13,7 +13,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Container } from '@mui/system';
 
-export default function Login() {
+export default function Login(props) {
   return (
     <Container>
       <div>
@@ -29,7 +29,7 @@ export default function Login() {
             </Container>
           </Grid>
           <Grid item xs={6}>
-            <Inputs />
+            <Inputs switchPage={props.switchPage} />
           </Grid>
         </Grid>
       </div>
@@ -37,14 +37,14 @@ export default function Login() {
   );
 }
 
-function Inputs() {
+function Inputs(props) {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   return (
     <div>
       <div>
-        [Comapss Care Logo]
+        <h1>Comapss Care</h1>
         <InputLabel htmlFor="filled-adornment-password">
           Doctor Email
         </InputLabel>
@@ -69,7 +69,7 @@ function Inputs() {
         />
       </div>
 
-      <Button variant="contained">Login</Button>
+      <Button variant="contained" onClick={() => {props.switchPage(false)}}>Login</Button>
       <br />
       <Button variant="contained">Forgot Password</Button>
     </div>
