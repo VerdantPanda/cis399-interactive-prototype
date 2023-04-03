@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/root.route';
 import Dashboard from './routes/dashboard.route';
 import Login from './routes/login.route';
+import { useState } from 'react';
 
 function App() {
   const router = createBrowserRouter([
@@ -33,11 +34,14 @@ function App() {
     },
   ]);
 
+  const [login, setLogin] = useState(true);
+
   return (
-    <div className="App" style={{height: '100vh'}}>
+    <div className="App" style={{ height: '100vh' }}>
       {/* <RouterProvider router={router} /> */}
-      <Dashboard></Dashboard>
-      {/* <Login></Login> */}
+      {/* <Dashboard></Dashboard> */}
+
+      {login ? <Login switchPage={setLogin}></Login> : <Dashboard></Dashboard>}
     </div>
   );
 }
