@@ -28,19 +28,28 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 
 export default function Dashbaord() {
+  const drawerWidth = 0;
+
   return (
-    <Container
-      sx={{ alignContent: 'center', alignSelf: 'center', textAlign: 'center' }}
-    >
-      {/* <Nav /> */}
-      <Stack spacing={3}>
-        <Box sx={{ width: '100%', height: '100%', backgroundColor: 'green' }}>
-          <Calander />
-        </Box>
-        <Divider />
-        <MainSection />
-      </Stack>
-    </Container>
+    <Box sx={{ backgroundColor: 'pink', height: '100%' }}>
+      <Nav />
+      <Container
+        sx={{
+          textAlign: 'center',
+          marginLeft: '14%',
+          height: '100%',
+        }}
+      >
+        <Stack>
+          <Box sx={{ width: '100%', height: '100%', backgroundColor: 'green' }}>
+            <Calander />
+          </Box>
+          <Divider />
+          {/* <MainSection /> */}
+          <PatientOverview />
+        </Stack>
+      </Container>
+    </Box>
   );
 }
 
@@ -128,18 +137,21 @@ function Nav() {
 
 function Calander() {
   return (
-    <Stack direction="row" padding={1}>
+    <Stack direction="row" padding={0}>
       <Card
         sx={{
           backgroundColor: 'skyblue',
           textAlign: 'start',
           minWidth: '200px',
           minHeight: '100px',
+          paddingLeft: '10px',
         }}
       >
-        <h3>
-          Today <br /> Wed 01 March
-        </h3>
+        <Typography>
+          <h3>
+            Today <br /> Wed 01 March
+          </h3>
+        </Typography>
       </Card>
       {[
         { name: 'Patrick Gillmore', time: '10:30 - 11:00 AM' },
@@ -167,10 +179,92 @@ function Calander() {
   );
 }
 
-function MainSection() {
+function PatientOverview() {
   return (
     <Box>
-      <Stack spacing={4}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Card
+            sx={{
+              alignContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+              padding: '10px',
+              marginTop: '10px',
+            }}
+          >
+            <Stack direction="row" spacing={1}>
+              <Avatar sx={{ width: 56, height: 56 }}>PG</Avatar>
+              <Typography
+                variant="h7"
+                color="text.secondary"
+                textAlign="left"
+                sx={{
+                  alignSelf: 'center',
+                }}
+              >
+                Gillmore, Patrick
+              </Typography>
+              <Grid container>
+                <Grid item xs={4}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      alignSelf: 'center',
+                    }}
+                  >
+                    <i>Gender</i>
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      alignSelf: 'center',
+                    }}
+                  >
+                    <i>DOB</i>
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      alignSelf: 'center',
+                    }}
+                  >
+                    <i>Address</i>
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography variant="subtitle2">M</Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography variant="subtitle2">03/10/11995</Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography variant="subtitle2">
+                    3101 Walnut St, Philadelphia, PA 19104
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Button variant="contained">Send Message</Button>
+            </Stack>
+          </Card>
+        </Grid>
+        <Grid item xs={8}></Grid>
+        <Grid item xs={4}></Grid>
+        <Grid item xs={6}></Grid>
+        <Grid item xs={6}></Grid>
+      </Grid>
+    </Box>
+  );
+}
+
+function MainSection() {
+  return (
+    <Box sx={{ backgroundColor: 'azure', height: '100%', marginTop: '5px' }}>
+      <Stack spacing={3}>
         <Box sx={{ textAlign: 'left' }}>
           <h2>
             <b>Welcome, Dr. Chu</b>
@@ -189,6 +283,12 @@ function MainSection() {
         <Grid container spacing={1}>
           <Grid item xs={4}>
             <h2 style={{ textAlign: 'left' }}>Incoming Patient</h2>
+          </Grid>
+          <Grid item xs={4}></Grid>
+          <Grid item xs={4}>
+            <h2 style={{ textAlign: 'left' }}>Next Patient</h2>
+          </Grid>
+          <Grid item xs={4}>
             <PatientCard />
           </Grid>
           <Grid item xs={4}>
@@ -211,7 +311,6 @@ function MainSection() {
             </Card>
           </Grid>
           <Grid item xs={4}>
-            <h2 style={{ textAlign: 'left' }}>Next Patient</h2>
             <PatientCard />
           </Grid>
         </Grid>
