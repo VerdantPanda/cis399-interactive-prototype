@@ -370,12 +370,14 @@ function MainSection(props) {
               <CardActionArea>
                 <CardContent sx={{ textAlign: 'left' }}>
                   <Typography>
-                    <h2>
+                    <Stack direction="row" spacing={2}>
                       <ErrorOutlineRoundedIcon
                         sx={{ color: 'red', scale: '1.5' }}
-                      />{' '}
-                      <b>Warning</b>
-                    </h2>
+                      />
+                      <h2>
+                        <b>Warning</b>
+                      </h2>
+                    </Stack>
                     Your next patient will come with an interpreter. Learn more
                     about their medical culture for better care.
                   </Typography>
@@ -470,6 +472,72 @@ function PatientCard(props) {
 }
 
 function ModalContent1(props) {
+  const [expanded, setExpanded] = useState(false);
+
+  const smallText = (
+    <div>
+      <b>1. Holistic approach</b> <br />
+      Japanese culture traditionally places a a strong emphasis on holistic
+      approaches to health, which may include practices such as acupuncture,
+      moxibustion, and herbal medicine herbal medicine. The patient may be more
+      likely to seek out alternative or complementary therapies in addition to
+      Western medicine...
+      <br />
+      <br />
+      <Stack direction={'row-reverse'}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            setExpanded(true);
+          }}
+        >
+          {' '}
+          Read more
+        </Button>
+      </Stack>
+    </div>
+  );
+
+  const bigText = (
+    <div>
+      <b>1. Holistic approach</b> <br />
+      Japanese culture traditionally places a a strong emphasis on holistic
+      approaches to health, which may include practices such as acupuncture,
+      moxibustion, and herbal medicine herbal medicine. The patient may be more
+      likely to seek out alternative or complementary therapies in addition to
+      Western medicine.
+      <br />
+      <br />
+      <b>2. Respect for authority.</b> In Japan, there is a strong cultural
+      emphasis on respect for authority figures. This may mean that the patient
+      may be hesitant to ask questions or provide information that contradicts
+      what the doctor has said.
+      <br />
+      <br />
+      <b>3. Family.</b> In Japan, family plays a central role in many aspects of
+      life, including healthcare decisions. The patient may involve their family
+      members in their care or may rely on family members to translate or
+      communicate for them.
+      <br />
+      <br />
+      <b>4. Physical contact.</b> Some Japanese patients may be uncomfortable
+      with physical contact or may prefer more formal interactions with their
+      doctors.
+      <br />
+      <br />
+      <b>5. Diet.</b> Traditional Japanese diets tend to be low in saturated fat
+      and high in fish, vegetables, and rice. However, Japanese culture includes
+      many processed and high sugar foods.
+      <br />
+      <br />
+      <b>6. Stigma around mental health.</b> Mental health issues are often
+      stigmatized in Japan, and patients may be hesitant to seek help for
+      conditions such as depression or anxiety. Doctors may need to be
+      especially sensitive to cultural attitudes and beliefs surrounding mental
+      health.
+    </div>
+  );
+
   return (
     <Box
       sx={{
@@ -478,55 +546,64 @@ function ModalContent1(props) {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: 400,
-        height: 400,
+        height: 'auto',
         bgcolor: 'background.paper',
         border: '2px solid #000',
+
         boxShadow: 24,
         p: 4,
         overflow: 'auto',
+        borderRadius: '16px',
       }}
     >
-      <Typography id="modal-modal-title" variant="h6" component="h2">
-        Alert!
-      </Typography>
+      <Stack direction="row" spacing={2}>
+        <ErrorOutlineRoundedIcon sx={{ color: 'red', scale: '2' }} />
+
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          About Patient Patrick Gillmore
+        </Typography>
+      </Stack>
       <Typography id="modal-modal-description" sx={{ mt: 2, height: 400 }}>
         It is important to note that individual beliefs and practices may vary,
         and that the patient's individual experiences and health history should
         always be taken into account.
         <br />
-        <Stack direction={'row'}>
+        <br />
+        <Stack direction={'row'} spacing={2}>
           {' '}
-          <Checkbox />
-          <p>I acknowledge that I've read the above information</p>
+          <Checkbox
+            sx={{ scale: '1.4' }}
+            onClick={() => {
+              if (expanded) {
+                props.handleClose();
+              } 
+            }}
+          />
+          <p>
+            <b>I acknowledge that I've read the above information</b>
+          </p>
         </Stack>
-        Japanese culture traditionally places a a strong emphasis on holistic
-        approaches to health, which may include practices such as acupuncture,
-        moxibustion, and herbal medicine herbal medicine. The patient may be
-        more likely to seek out alternative or complementary therapies in
-        addition to Western medicine. 2. Respect for authority. In Japan, there
-        is a strong cultural emphasis on respect for authority figures. This may
-        mean that the patient may be hesitant to ask questions or provide
-        information that contradicts what the doctor has said. 3. Family. In
-        Japan, family plays a central role in many aspects of life, including
-        healthcare decisions. The patient may involve their family members in
-        their care or may rely on family members to translate or communicate for
-        them. 4. Physical contact. Some Japanese patients may be uncomfortable
-        with physical contact or may prefer more formal interactions with their
-        doctors. 5. Diet. Traditional Japanese diets tend to be low in saturated
-        fat and high in fish, vegetables, and rice. However, Japanese culture
-        includes many processed and high sugar foods. 6. Stigma around mental
-        health. Mental health issues are often stigmatized in Japan, and
-        patients may be hesitant to seek help for conditions such as depression
-        or anxiety. Doctors may need to be especially sensitive to cultural
-        attitudes and beliefs surrounding mental health.
-        <Stack direction={'row'}>
-          {' '}
-          <Checkbox />
-          <p>I acknowledge that I've read the above information</p>
+        <br />
+        Please consider:
+        <br />
+        <br />
+        <Box
+          sx={{
+            borderRadius: '16px',
+            backgroundColor: 'Lavender',
+            padding: '20px',
+          }}
+        >
+          {expanded ? bigText : smallText}
+        </Box>
+        <br />
+        {/* <Stack direction={'row-reverse'}>
+          <Button variant="contained" onClick={props.handleClose}>
+            Proceed
+          </Button>
         </Stack>
-        <Button variant="contained" onClick={props.handleClose}>
-          Proceed
-        </Button>
+        <br />
+        <br /> */}
       </Typography>
     </Box>
   );
@@ -541,12 +618,14 @@ function ModalContent2(props) {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: 400,
-        height: 400,
+        maxHeight: 800,
+        height: 'auto',
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
         overflow: 'auto',
+        borderRadius: '16px',
       }}
     >
       <ErrorOutlineRoundedIcon sx={{ color: 'red', scale: '1.5' }} />
