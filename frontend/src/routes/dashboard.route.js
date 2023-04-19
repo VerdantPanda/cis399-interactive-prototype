@@ -151,45 +151,47 @@ function Nav() {
 
 function Calander() {
   return (
-    <Stack direction="row" padding={0}>
-      <Card
-        sx={{
-          backgroundColor: 'skyblue',
-          textAlign: 'start',
-          minWidth: '200px',
-          minHeight: '100px',
-          paddingLeft: '10px',
-        }}
-      >
-        <Typography>
-          <h3>
-            Today <br /> Wed 01 March
-          </h3>
-        </Typography>
-      </Card>
-      {[
-        { name: 'Patrick Gillmore', time: '10:30 - 11:00 AM' },
-        { name: 'Kendrick Fiona', time: '11:00 - 11:30 AM' },
-        { name: 'Micahel', time: '10:30 - 10:00 AM' },
-        { name: 'John Stevenson', time: '10:30 - 10:00 AM' },
-      ].map((elem) => (
-        // <CardActionArea>
+    <Box sx={{ paddingTop: '10px', width: '100%', alignSelf: 'center' }}>
+      <Stack direction="row" padding={0}>
         <Card
           sx={{
+            backgroundColor: 'skyblue',
+            textAlign: 'start',
             minWidth: '200px',
             minHeight: '100px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            borderBlockColor: 'blue',
+            paddingLeft: '10px',
           }}
-          variant="outlined"
         >
-          <h3>{elem.time}</h3>
-          {elem.name}
+          <Typography>
+            <h3>
+              Today <br /> Wed 01 March
+            </h3>
+          </Typography>
         </Card>
-        // {/* </CardActionArea> */}
-      ))}
-    </Stack>
+        {[
+          { name: 'Patrick Gillmore', time: '10:30 - 11:00 AM' },
+          { name: 'Kendrick Fiona', time: '11:00 - 11:30 AM' },
+          { name: 'Micahel', time: '10:30 - 10:00 AM' },
+          { name: 'John Stevenson', time: '10:30 - 10:00 AM' },
+        ].map((elem) => (
+          // <CardActionArea>
+          <Card
+            sx={{
+              minWidth: '200px',
+              minHeight: '100px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              borderBlockColor: 'blue',
+            }}
+            variant="outlined"
+          >
+            <h3>{elem.time}</h3>
+            {elem.name}
+          </Card>
+          // </CardActionArea>
+        ))}
+      </Stack>
+    </Box>
   );
 }
 
@@ -328,6 +330,8 @@ function MainSection(props) {
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
 
+  const [ackDone, setAckDone] = useState(false);
+
   return (
     <Box sx={{ backgroundColor: 'azure', height: '100%', marginTop: '5px' }}>
       <Stack spacing={3}>
@@ -337,7 +341,8 @@ function MainSection(props) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <ModalContent2 handleClose={handleClose} />
+          <ModalContent2 handleClose={handleClose} setAckDone={setAckDone} />
+          {/* <ModalContent1 handleClose={handleClose} /> */}
         </Modal>
         <Box sx={{ textAlign: 'left' }}>
           <h2>
@@ -347,10 +352,14 @@ function MainSection(props) {
           <span style={{ color: 'green' }}>
             <u>2 new messages</u>
           </span>{' '}
-          and{' '}
-          <span style={{ color: 'red' }}>
-            <u>1 warning</u>{' '}
-          </span>
+          {!ackDone && (
+            <span>
+              and
+              <span style={{ color: 'red' }}> {' '}
+                <u>1 warning</u>{' '}
+              </span>
+            </span>
+          )}
           for an incoming patient.
         </Box>
 
@@ -363,35 +372,40 @@ function MainSection(props) {
             <h2 style={{ textAlign: 'left' }}>Next Patient</h2>
           </Grid>
           <Grid item xs={4}>
-            <PatientCard setPatientOverview={props.setPatientOverview} />
+            <PatientCard setPatientOverview={props.setPatientOverview}
+            name={"Patrick Gilmore"}
+            date={"Wednesday, 01 March"}
+            />
           </Grid>
           <Grid item xs={4}>
-            <Card sx={{ backgroundColor: 'ghostwhite' }}>
-              <CardActionArea>
-                <CardContent sx={{ textAlign: 'left' }}>
-                  <Typography>
-                    <Stack direction="row" spacing={2}>
-                      <ErrorOutlineRoundedIcon
-                        sx={{ color: 'red', scale: '1.5' }}
-                      />
-                      <h2>
-                        <b>Warning</b>
-                      </h2>
-                    </Stack>
-                    Your next patient will come with an interpreter. Learn more
-                    about their medical culture for better care.
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button variant="contained" onClick={handleOpen}>
-                    Learn More
-                  </Button>
-                </CardActions>
-              </CardActionArea>
-            </Card>
+            {!ackDone && (
+              <Card sx={{ backgroundColor: 'ghostwhite' }}>
+                <CardActionArea>
+                  <CardContent sx={{ textAlign: 'left' }}>
+                    <Typography>
+                      <Stack direction="row" spacing={2}>
+                        <ErrorOutlineRoundedIcon
+                          sx={{ color: 'red', scale: '1.5' }}
+                        />
+                        <h2>
+                          <b>Warning</b>
+                        </h2>
+                      </Stack>
+                      Your next patient will come with an interpreter. Learn
+                      more about their medical culture for better care.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button variant="contained" onClick={handleOpen}>
+                      Learn More
+                    </Button>
+                  </CardActions>
+                </CardActionArea>
+              </Card>
+            )}
           </Grid>
           <Grid item xs={4}>
-            <PatientCard />
+            <PatientCard name={"Bob Jones"} setPatientOverview={()=>{}} date={'Tuesday, 03 March'}/>
           </Grid>
         </Grid>
       </Stack>
@@ -417,7 +431,7 @@ function PatientCard(props) {
               component="div"
               textAlign="left"
             >
-              <b>Wednesday, 01 March</b>
+              <b>{props.date}</b>
             </Typography>
             <Typography variant="body2" color="text.secondary" textAlign="left">
               <AccessTimeIcon /> 10:30 - 11:00 - 30 mins <br />
@@ -435,7 +449,7 @@ function PatientCard(props) {
                     color="text.secondary"
                     textAlign="left"
                   >
-                    Patrick Gillmore
+                    {props.name}
                     <br />
                     New Patient
                   </Typography>
@@ -546,10 +560,10 @@ function ModalContent1(props) {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: 400,
-        height: 'auto',
+        height: 570,
         bgcolor: 'background.paper',
         border: '2px solid #000',
-
+        maxHeight: 900,
         boxShadow: 24,
         p: 4,
         overflow: 'auto',
@@ -576,7 +590,7 @@ function ModalContent1(props) {
             onClick={() => {
               if (expanded) {
                 props.handleClose();
-              } 
+              }
             }}
           />
           <p>
@@ -610,6 +624,8 @@ function ModalContent1(props) {
 }
 
 function ModalContent2(props) {
+
+  const [dis, setDis] = useState(true);
   return (
     <Box
       sx={{
@@ -685,10 +701,19 @@ function ModalContent2(props) {
 
       <Stack direction={'row'}>
         {' '}
-        <Checkbox />
+        <Checkbox onChange={() => {
+          setDis(!dis);
+        }}/>
         <p>I acknowledge that I've read the above information</p>
       </Stack>
-      <Button variant="contained" onClick={props.handleClose}>
+      <Button
+        variant="contained"
+        disabled = {dis}
+        onClick={() => {
+          props.handleClose();
+          props.setAckDone(true);
+        }}
+      >
         Proceed
       </Button>
     </Box>

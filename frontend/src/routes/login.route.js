@@ -44,7 +44,7 @@ function Inputs(props) {
   return (
     <div>
       <div>
-        <h1>Comapss Care</h1>
+        <h1>Compass Care</h1>
         <InputLabel htmlFor="filled-adornment-password">
           Doctor Email
         </InputLabel>
